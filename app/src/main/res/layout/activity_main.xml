@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/playerScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Player Score: 0"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/dealerScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dealer Score: 0"
+        android:textSize="18sp"/>
+
+    <GridLayout
+        android:id="@+id/playerCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:rowCount="1"
+        android:columnCount="5"/>
+
+    <GridLayout
+        android:id="@+id/dealerCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:rowCount="1"
+        android:columnCount="5"/>
+
+    <!-- Add space before the buttons -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/hitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hit"
+            android:backgroundTint="@android:color/holo_blue_light"/>
+
+        <Button
+            android:id="@+id/standButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stand"
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:layout_marginStart="8dp"/> <!-- Adds space between buttons -->
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset Game"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@android:color/holo_red_light"/>
+
+
+    <TextView
+        android:id="@+id/gameStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>
