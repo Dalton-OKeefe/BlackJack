@@ -22,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
     private GridLayout dealerCardsLayout;
     private ArrayList<String> deck;
 
+    private int playerAces = 0; // Tracks the player's Aces
+    private int dealerAces = 0; // Tracks the dealer's Aces
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Add logic for Hit
+                playerHit();
             }
         });
 
@@ -56,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Add logic for Stand
+                dealerPlay();
             }
         });
         resetButton.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +123,77 @@ public class MainActivity extends AppCompatActivity {
         dealerCardsLayout.removeAllViews();
         initializeDeck();
         dealInitialCards();
+        enableButtons();
         gameStatusView.setText("");
+    }
+
+    private void playerHit() {
+        if (!deck.isEmpty()) {
+            int cardValue = getCardValue(deck.remove(0));
+            if (cardValue == 11) playerAces++; // Count Ace
+            playerScore += cardValue;
+
+            // Adjust Ace values if needed
+            adjustForAce();
+
+            updateScoreViews();
+
+            if (playerScore > 21) {
+                gameStatusView.setText("Player Busts! Dealer Wins!");
+                disableButtons();
+            }
+        }
+    }
+
+    private void dealerPlay() {
+        while (dealerScore < 17 && !deck.isEmpty()) {
+            int cardValue = getCardValue(deck.remove(0));
+            if (cardValue == 11) dealerAces++; // Count Ace
+            dealerScore += cardValue;
+
+            // Adjust Ace values if needed
+            adjustForAce();
+
+            updateScoreViews();
+        }
+        determineWinner();
+    }
+
+    // New helper method to adjust Ace values
+    private void adjustForAce() {
+        // Adjust player's Aces if they bust
+        while (playerScore > 21 && playerAces > 0) {
+            playerScore -= 10; // Convert one Ace from 11 to 1
+            playerAces--;
+        }
+
+        // Adjust dealer's Aces if they bust
+        while (dealerScore > 21 && dealerAces > 0) {
+            dealerScore -= 10; // Convert one Ace from 11 to 1
+            dealerAces--;
+        }
+    }
+
+    private void determineWinner() {
+        // Determine the game outcome based on scores
+        if (dealerScore > 21 || playerScore > dealerScore) {
+            gameStatusView.setText("Player Wins!");
+        } else if (playerScore == dealerScore) {
+            gameStatusView.setText("Push");
+        } else {
+            gameStatusView.setText("Dealer Wins!");
+        }
+        disableButtons();
+    }
+
+    private void disableButtons() {
+        findViewById(R.id.hitButton).setEnabled(false);
+        findViewById(R.id.standButton).setEnabled(false);
+    }
+
+    private void enableButtons() {
+        findViewById(R.id.hitButton).setEnabled(true);
+        findViewById(R.id.standButton).setEnabled(true);
     }
 }
 
